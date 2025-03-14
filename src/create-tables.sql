@@ -30,6 +30,5 @@ CREATE TABLE recharges (
     id SERIAL PRIMARY KEY,
     phone_id INT NOT NULL,
     amount DECIMAL(10,2) CHECK (amount BETWEEN 10.00 AND 1000.00),
-    recharge_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (phone_id) REFERENCES phones (id) ON DELETE CASCADE
 );
