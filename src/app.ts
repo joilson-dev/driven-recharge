@@ -2,11 +2,13 @@ import express from 'express';
 import { connection } from './config/bd';
 import phoneRouter from './routers/phoneRouter';
 import { errorHandler } from './middlewares/errorHandler';
+import rechargeRouter from './routers/rechargeRouter';
 
 const app = express();
 app.use(express.json());
 
 app.use("/", phoneRouter);
+app.use("/", rechargeRouter);
 app.use(errorHandler);
 
 connection.query('SELECT NOW()', (err) => {
