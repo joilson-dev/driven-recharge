@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-export const summarySchema = Joi.object({
+export const documentSchema = Joi.object({
   document: Joi.string()
     .length(11)
     .pattern(/^\d+$/)

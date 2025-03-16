@@ -16,3 +16,18 @@ export async function createPhone(
     next(err);
   }
 }
+
+export async function getClientPhones(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const { document } = req.params;
+
+  try {
+    const phones = await phoneService.getClientPhones(document);
+    res.status(200).json(phones);
+  } catch (err) {
+    next(err);
+  }
+}

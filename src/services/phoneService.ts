@@ -43,3 +43,13 @@ if (phonesCount >= 3) {
 
   return newPhone;
 }
+
+export async function getClientPhones(document: string) {
+  const client = await clientRepository.findClientByCPF(document);
+  if (!client) {
+    return [];
+  }
+
+  const phones = await carrierRepository.findPhonesByCPF(document);
+  return phones;
+}

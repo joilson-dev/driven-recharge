@@ -1,14 +1,18 @@
 import { Request, Response, NextFunction } from "express";
 import { ObjectSchema } from "joi";
 
-export function validateSchema(schema: ObjectSchema) {
-  return (req: Request, res: Response, next: NextFunction): void => {
-    const validation = schema.validate(req.body, { abortEarly: false });
+export function validateSchema(
+  schema: ObjectSchema,
+  location: "body" | "params" | "query" = "body"
+) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const data = req[location];
+    const { error } = schema.validate(data, { abortEarly: false });
 
-    if (validation.error) {
+    if (error) {
       res.status(422).json({
         message: "Dados inválidos",
-        details: validation.error.details.map(d => d.message),
+        details: error.details.map(d => d.message),
       });
       return;
     }
