@@ -41,3 +41,14 @@ export const phoneSchema = Joi.object({
       }),
   }).required(),
 });
+
+
+export const phoneNumberSchema = Joi.object({
+  number: Joi.string()
+    .pattern(/^\d{10,11}$/)
+    .required()
+    .messages({
+      "string.pattern.base": "Número deve ter 10 ou 11 dígitos.",
+      "any.required": "Número do telefone é obrigatório.",
+    }),
+});

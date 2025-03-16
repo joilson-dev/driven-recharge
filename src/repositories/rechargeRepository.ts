@@ -18,3 +18,17 @@ export async function findPhoneById(id: number): Promise<Phone | null> {
   );
   return result.rows[0] || null;
 }
+
+export async function findRechargesByPhoneNumber(number: string) {
+  const result = await connection.query(
+    `SELECT
+      recharges.amount,
+      carriers.name AS "carrierName"
+     FROM recharges
+     JOIN phones ON recharges.phone_id = phones.id
+     JOIN carriers ON phones.carrier_id = carriers.id
+     WHERE phones.number = $1`,
+    [number] 
+  );
+  return result.rows;
+}

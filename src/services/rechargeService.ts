@@ -1,5 +1,7 @@
 import * as rechargeRepository from "../repositories/rechargeRepository";
 
+import * as phoneRepository from "../repositories/phoneRepository";
+
 export async function createRecharge(phoneId: number, amount: number) {
   const phone = await rechargeRepository.findPhoneById(phoneId);
   if (!phone) {
@@ -12,4 +14,14 @@ export async function createRecharge(phoneId: number, amount: number) {
   });
 
   return recharge;
+}
+
+export async function getRechargesByNumber(number: string) {
+  const phoneExists = await phoneRepository.findPhoneByNumber(number);
+  if (!phoneExists) {
+    return [];
+  }
+
+  const recharges = await rechargeRepository.findRechargesByPhoneNumber(number);
+  return recharges;
 }

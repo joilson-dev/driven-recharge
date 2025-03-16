@@ -15,3 +15,19 @@ export async function createRecharge(
     next(err);
   }
 }
+
+
+export async function getRechargesByNumber(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const { number } = req.params;
+
+  try {
+    const recharges = await rechargeService.getRechargesByNumber(number);
+    res.status(200).json(recharges);
+  } catch (err) {
+    next(err);
+  }
+}

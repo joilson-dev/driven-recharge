@@ -27,3 +27,11 @@ export async function findPhoneByNumberAndCPF(number: string, cpf: string) {
   );
   return result.rows[0] || null;
 }
+
+export async function findPhoneByNumber(number: string): Promise<Phone | null> {
+  const result = await connection.query<Phone>(
+    "SELECT * FROM phones WHERE number = $1",
+    [number]
+  );
+  return result.rows[0] || null;
+}
