@@ -35,3 +35,45 @@ export async function findPhoneByNumber(number: string): Promise<Phone | null> {
   );
   return result.rows[0] || null;
 }
+
+
+export async function findPhonesWithDetails(clientId: number) {
+  const result = await connection.query(
+    `SELECT
+      phones.id,
+      phones.number,
+      phones.name,
+      phones.description,
+      carriers.id AS "carrierId",
+      carriers.name AS "carrierName",
+      carriers.code AS "carrierCode",
+      COALESCE(
+        json_agg(
+          json_build_object(
+            'id', recharges.id,
+            'amount', recharges.amount
+          )
+        ) FILTER (WHERE recharges.id IS NOT NULL),
+        '[]'
+      ) AS recharges
+     FROM phones
+     LEFT JOIN recharges ON phones.id = recharges.phone_id
+     INNER JOIN carriers ON phones.carrier_id = carriers.id
+     WHERE phones.client_id = $1
+     GROUP BY phones.id, carriers.id`,
+    [clientId]
+  );
+
+  return result.rows.map(row => ({
+    id: row.id,
+    number: row.number,
+    name: row.name,
+    description: row.description,
+    carrier: {
+      id: row.carrierId,
+      name: row.carrierName,
+      code: row.carrierCode,
+    },
+    recharges: row.recharges,
+  }));
+}

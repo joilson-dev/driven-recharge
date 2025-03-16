@@ -3,12 +3,14 @@ import { connection } from './config/bd';
 import phoneRouter from './routers/phoneRouter';
 import { errorHandler } from './middlewares/errorHandler';
 import rechargeRouter from './routers/rechargeRouter';
+import summaryRouter from './routers/summaryRouter';
 
 const app = express();
 app.use(express.json());
 
 app.use("/", phoneRouter);
 app.use("/", rechargeRouter);
+app.use("/", summaryRouter);
 app.use(errorHandler);
 
 connection.query('SELECT NOW()', (err) => {
