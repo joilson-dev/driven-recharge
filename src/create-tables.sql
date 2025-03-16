@@ -9,20 +9,19 @@ INSERT INTO carriers (name, code) VALUES ('Tim', 41);
 INSERT INTO carriers (name, code) VALUES ('Oi', 31);
 INSERT INTO carriers (name, code) VALUES ('Claro', 21);
 
-
 CREATE TABLE clients (
     id SERIAL PRIMARY KEY,
-    cpf VARCHAR(11) UNIQUE NOT NULL,
-    name VARCHAR(255) NOT NULL
+    cpf VARCHAR(11) UNIQUE NOT NULL
 );
 
 CREATE TABLE phones (
     id SERIAL PRIMARY KEY,
-    number VARCHAR(11) UNIQUE NOT NULL,
+    number VARCHAR(11) NOT NULL,
     carrier_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NOT NULL,
     client_id INT NOT NULL,
-    description TEXT NOT NULL,
-    FOREIGN KEY (carrier_id) REFERENCES carriers (id) ON DELETE CASCADE,
+    FOREIGN KEY (carrier_id) REFERENCES carriers (id) ON DELETE RESTRICT,
     FOREIGN KEY (client_id) REFERENCES clients (id) ON DELETE CASCADE
 );
 

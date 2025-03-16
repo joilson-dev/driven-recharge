@@ -7,15 +7,15 @@ export type Carrier = {
 export type Client = {
   id: number;
   cpf: string;
-  name: string;
 };
 
 export type Phone = {
   id: number;
   number: string;
   carrier_id: number;
-  client_id: number;
+  name: string;
   description: string;
+  client_id: number;
 };
 
 export type Recharge = {
@@ -25,5 +25,9 @@ export type Recharge = {
 };
 
 export type CreateClient = Omit<Client, "id">;
-export type CreatePhone = Omit<Phone, "id">;
+export type CreatePhoneWithClientDTO = {
+  client: Omit<Client, "id">;
+  phone: Omit<Phone, "id" | "client_id" | "carrier_id">;
+};
+
 export type CreateRecharge = Omit<Recharge, "id">;
