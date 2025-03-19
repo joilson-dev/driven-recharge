@@ -4,6 +4,15 @@ API para gestão de recargas de telefonia, permitindo cadastro de clientes, núm
 
 ---
 
+## URL de Deploy
+A API está disponível no seguinte endpoint:
+
+```
+https://driven-recharge-t13u.onrender.com
+```
+
+---
+
 ## 🚀 Funcionalidades
 
 - **Cadastro de telefones**
