@@ -1,13 +1,6 @@
 import Joi from "joi";
+import { cpfSchema } from "./commonSchemas";
 
 export const documentSchema = Joi.object({
-  document: Joi.string()
-    .length(11)
-    .pattern(/^\d+$/)
-    .required()
-    .messages({
-      "string.length": "O documento deve ter exatamente 11 dígitos.",
-      "string.pattern.base": "O documento deve conter apenas números.",
-      "any.required": "O documento do cliente é obrigatório.",
-    }),
+  document: cpfSchema,
 });
